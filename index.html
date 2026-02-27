@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothing Shop</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        /* Product card styles */
+        .product-card {
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .image-container {
+            overflow: hidden;
+            height: 300px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .product-image {
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+        
+        /* Company logo styling */
+        .company-logo {
+            max-width: 50px;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* Tooltip styles */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Button loading state */
+        .btn-loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .btn-loading::after {
+            content: "";
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            position: absolute;
+            right: 10px;
+            top: calc(50% - 0.5rem);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-dark text-white p-4 mb-4">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="h3 mb-0">Clothing Shop</h1>
+            <div class="d-flex align-items-center">
+                <a href="#" class="text-white me-3">Home</a>
+                <a href="#" class="text-white me-3">Products</a>
+                <a href="#" class="text-white me-3">About</a>
+                <a href="#" class="text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ms-2">
+                        <circle cx="8" cy="21" r="1"></circle>
+                        <circle cx="19" cy="21" r="1"></circle>
+                        <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mb-5">
+        <h2 class="text-center mb-4">Featured Products</h2>
+
+        <!-- Product Grid -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            <!-- Product 1 -->
+            <div class="col">
+                <form class="product-form">
+                    <div class="card h-100 product-card">
+                        <div class="image-container">
+                            <img src="Cloth_1.png" class="product-image" alt="Shirts">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Shirts</h5>
+                            <p class="card-text text-primary fw-bold">R129.99</p>
+                            <div class="tooltip-container">
+                                <button class="btn btn-success w-100 buy-now-btn" data-product="Shirts">Buy Now</button>
+                                <span class="tooltip-text">Add Shirts to your cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="col">
+                <form class="product-form">
+                    <div class="card h-100 product-card">
+                        <div class="image-container">
+                            <img src="Clothe_2.avif" class="product-image" alt="Denim Jacket">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Denim Jacket</h5>
+                            <p class="card-text text-primary fw-bold">R199.99</p>
+                            <div class="tooltip-container">
+                                <button class="btn btn-success w-100 buy-now-btn" data-product="Denim Jacket">Buy Now</button>
+                                <span class="tooltip-text">Add Denim Jacket to your cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="col">
+                <form class="product-form">
+                    <div class="card h-100 product-card">
+                        <div class="image-container">
+                            <img src="Clothe_3.jpeg" class="product-image" alt="Dresses">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Dresses</h5>
+                            <p class="card-text text-primary fw-bold">R79.99</p>
+                            <div class="tooltip-container">
+                                <button class="btn btn-success w-100 buy-now-btn" data-product="Dresses">Buy Now</button>
+                                <span class="tooltip-text">Add Dresses to your cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="col">
+                <form class="product-form">
+                    <div class="card h-100 product-card">
+                        <div class="image-container">
+                            <img src="Clothe_4.webp" class="product-image" alt="Men's Jacket">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Men's Jacket</h5>
+                            <p class="card-text text-primary fw-bold">R49.99</p>
+                            <div class="tooltip-container">
+                                <button class="btn btn-success w-100 buy-now-btn" data-product="Men's Jacket">Buy Now</button>
+                                <span class="tooltip-text">Add Men's Jacket to your cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Product 5 -->
+            <div class="col">
+                <form class="product-form">
+                    <div class="card h-100 product-card">
+                        <div class="image-container">
+                            <img src="Clothe_5.jpg" class="product-image" alt="Denim Pants">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Denim Pants</h5>
+                            <p class="card-text text-primary fw-bold">R89.99</p>
+                            <div class="tooltip-container">
+                                <button class="btn btn-success w-100 buy-now-btn" data-product="Denim Pants">Buy Now</button>
+                                <span class="tooltip-text">Add Denim Pants to your cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Product 6 -->
+            <div class="col">
+                <form class="product-form">
+                    <div class="card h-100 product-card">
+                        <div class="image-container">
+                            <img src="Clothe_6.jpeg" class="product-image" alt="Summer Shirts">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Summer Shirts</h5>
+                            <p class="card-text text-primary fw-bold">R149.99</p>
+                            <div class="tooltip-container">
+                                <button class="btn btn-success w-100 buy-now-btn" data-product="Summer Shirts">Buy Now</button>
+                                <span class="tooltip-text">Add Summer Shirts to your cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Product 7 -->
+            <div class="col">
+                <form class="product-form">
+                    <div class="card h-100 product-card">
+                        <div class="image-container">
+                            <img src="Clothe_7.webp" class="product-image" alt="Puffer Jackets">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Puffer Jackets</h5>
+                            <p class="card-text text-primary fw-bold">R339.99</p>
+                            <div class="tooltip-container">
+                                <button class="btn btn-success w-100 buy-now-btn" data-product="Puffer Jackets">Buy Now</button>
+                                <span class="tooltip-text">Add Puffer Jackets to your cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Product 8 -->
+            <div class="col">
+                <form class="product-form">
+                    <div class="card h-100 product-card">
+                        <div class="image-container">
+                            <img src="Clothe_8.jpg" class="product-image" alt="Cotton Shirts">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Cotton Shirts</h5>
+                            <p class="card-text text-primary fw-bold">R599.99</p>
+                            <div class="tooltip-container">
+                                <button class="btn btn-success w-100 buy-now-btn" data-product="Cotton Shirts">Buy Now</button>
+                                <span class="tooltip-text">Add Cotton Shirts to your cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Product 9 -->
+            <div class="col">
+                <form class="product-form">
+                    <div class="card h-100 product-card">
+                        <div class="image-container">
+                            <img src="Clothe_9.jpg" class="product-image" alt="Linen Pants">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Linen Pants</h5>
+                            <p class="card-text text-primary fw-bold">R119.99</p>
+                            <div class="tooltip-container">
+                                <button class="btn btn-success w-100 buy-now-btn" data-product="Linen Pants">Buy Now</button>
+                                <span class="tooltip-text">Add Linen Pants to your cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Product 10 -->
+            <div class="col">
+                <form class="product-form">
+                    <div class="card h-100 product-card">
+                        <div class="image-container">
+                            <img src="Clothe_10.jpeg" class="product-image" alt="Formal Clothes">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Formal Clothes</h5>
+                            <p class="card-text text-primary fw-bold">R999.99</p>
+                            <div class="tooltip-container">
+                                <button class="btn btn-success w-100 buy-now-btn" data-product="Formal Clothes">Buy Now</button>
+                                <span class="tooltip-text">Add Formal Clothes to your cart</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer with Contact Form -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="d-flex align-items-center">
+                        <img src="clothing-store-logo.webp" alt="Clothing Shop Logo" class="company-logo me-2">
+                        <h3 class="h5 mb-0">Clothing Shop</h3>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h4 class="mb-3">Contact Us</h4>
+                    <form class="row g-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Your Name">
+                        </div>
+                        <div class="col-md-4">
+                            <input type="email" class="form-control" placeholder="Email Address">
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary w-100">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Add event listeners to all Buy Now buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent form submissions
+            const forms = document.querySelectorAll('.product-form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                });
+            });
+            
+            // Add click handlers to Buy Now buttons
+            const buyButtons = document.querySelectorAll('.buy-now-btn');
+            buyButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const productName = this.getAttribute('data-product');
+                    
+                    // Show loading state
+                    this.classList.add('btn-loading');
+                    this.textContent = 'Adding...';
+                    this.disabled = true;
+                    
+                    // Simulate API call (1 second delay)
+                    setTimeout(() => {
+                        // Reset button state
+                        this.classList.remove('btn-loading');
+                        this.textContent = 'Buy Now';
+                        this.disabled = false;
+                        
+                        // Show success message (you could replace this with a toast notification)
+                        alert(`${productName} added to cart!`);
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
